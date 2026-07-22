@@ -14,7 +14,7 @@ const { createSeal } = require('./seal');
  */
 const serverInfo = {
   name: 'company-seal-generator',
-  version: '0.0.3',
+  version: '1.0.2',
   description: '电子公章生成器 - 基于 Node.js Canvas 绘制高清 PNG 印章图片',
 };
 

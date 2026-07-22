@@ -1,6 +1,6 @@
 {
   "name": "company-seal-generator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "电子公章生成器 - 基于 Node.js Canvas 绘制高清 PNG 印章图片，支持做旧效果",
   "main": "seal.js",
   "bin": {
