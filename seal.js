@@ -91,10 +91,8 @@ function createSeal(name, code, outputPath = null) {
 
     ctx.save();
     ctx.translate(x, y);
-    // 参考HTML: ctx.rotate(angle + Math.PI / 2) + ctx.scale(-1, -1)
-    // 文字垂直于半径方向，顶部朝向圆心，然后翻转
-    ctx.rotate(angle + Math.PI / 2);
-    ctx.scale(-1, -1);
+    // 文字垂直于半径方向，顶部朝向圆心
+    ctx.rotate(angle - Math.PI / 2);
     ctx.fillText(codeText[i], 0, 0);
     ctx.restore();
   }
