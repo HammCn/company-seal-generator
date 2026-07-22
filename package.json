@@ -1,12 +1,14 @@
 {
   "name": "company-seal-generator",
   "version": "1.0.0",
-  "description": "电子公章生成器 - 基于 Node.js Canvas 绘制高清 PNG 印章图片",
+  "description": "电子公章生成器 - 基于 Node.js Canvas 绘制高清 PNG 印章图片，支持做旧效果",
   "main": "seal.js",
   "bin": {
     "company-seal-generator": "./index.js"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "node test.js"
+  },
   "keywords": [
     "seal",
     "stamp",
@@ -18,7 +20,9 @@
     "official-stamp",
     "canvas",
     "png",
-    "mcp"
+    "mcp",
+    "vintage",
+    "做旧"
   ],
   "author": "Hamm <admin@hamm.cn>",
   "license": "MIT",

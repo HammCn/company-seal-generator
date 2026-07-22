@@ -1,13 +1,27 @@
 #!/usr/bin/env node
 
+/**
+ * MCP Server Entry Point
+ * 
+ * 基于 Model Context Protocol (MCP) 的电子公章生成服务
+ * 通过标准输入输出与 MCP 客户端通信，提供公章生成工具
+ */
+
 const { createSeal } = require('./seal');
 
+/**
+ * MCP 服务器信息
+ */
 const serverInfo = {
   name: 'company-seal-generator',
   version: '0.0.3',
   description: '电子公章生成器 - 基于 Node.js Canvas 绘制高清 PNG 印章图片',
 };
 
+/**
+ * 工具列表定义
+ * generateSeal: 生成电子公章图片
+ */
 const tools = [
   {
     name: 'generateSeal',
@@ -23,19 +37,45 @@ const tools = [
           type: 'string',
           description: '统一社会信用代码，将弧形环绕在公章下半部分',
         },
+        step: {
+          type: 'number',
+          description: '做旧程度，0=不做旧（默认），1=轻微做旧，2=中度做旧，3=重度做旧',
+          minimum: 0,
+          maximum: 3,
+        },
+        nameFontSize: {
+          type: 'number',
+          description: '企业名称字体大小（像素），默认40px',
+          minimum: 20,
+          maximum: 80,
+        },
       },
       required: ['name', 'code'],
     },
   },
 ];
 
+/**
+ * 发送 MCP 消息到标准输出
+ * @param {Object} message - 要发送的消息对象
+ */
 function sendMessage(message) {
   process.stdout.write(JSON.stringify(message) + '\n');
 }
 
+/**
+ * 处理公章生成请求
+ * @param {Object} params - 请求参数
+ * @param {string} params.name - 企业名称
+ * @param {string} params.code - 统一社会信用代码
+ * @param {number} [params.step=0] - 做旧程度
+ * @param {number} [params.nameFontSize=40] - 企业名称字体大小
+ * @returns {Object} MCP 调用结果
+ */
 function handleGenerateSeal(params) {
-  const { name, code } = params;
+  const { name, code, step = 0, nameFontSize = 40 } = params;
 
+  // 校验必填参数
   if (!name || !code) {
     return {
       content: [
@@ -49,7 +89,8 @@ function handleGenerateSeal(params) {
   }
 
   try {
-    const buffer = createSeal(name, code);
+    // 调用 seal.js 生成公章图片
+    const buffer = createSeal(name, code, step, nameFontSize);
     const base64Image = buffer.toString('base64');
 
     return {
@@ -78,9 +119,15 @@ function handleGenerateSeal(params) {
   }
 }
 
+/**
+ * 处理 MCP 请求
+ * @param {Object} request - MCP JSON-RPC 请求对象
+ * @returns {Object} MCP JSON-RPC 响应对象
+ */
 function handleRequest(request) {
   const { method, params, id } = request;
 
+  // 初始化请求
   if (method === 'initialize') {
     return {
       jsonrpc: '2.0',
@@ -93,6 +140,7 @@ function handleRequest(request) {
     };
   }
 
+  // 列出可用工具
   if (method === 'tools/list') {
     return {
       jsonrpc: '2.0',
@@ -101,6 +149,7 @@ function handleRequest(request) {
     };
   }
 
+  // 调用工具
   if (method === 'tools/call') {
     const { name, arguments: args } = params;
     let result;
@@ -126,6 +175,7 @@ function handleRequest(request) {
     };
   }
 
+  // 未知方法
   return {
     jsonrpc: '2.0',
     id,
@@ -136,8 +186,12 @@ function handleRequest(request) {
   };
 }
 
+/**
+ * 标准输入缓冲区，用于处理分段的 JSON-RPC 消息
+ */
 let buffer = '';
 
+// 监听标准输入数据
 process.stdin.on('data', (data) => {
   buffer += data.toString();
 
@@ -164,6 +218,7 @@ process.stdin.on('data', (data) => {
   }
 });
 
+// 标准输入结束时退出
 process.stdin.on('end', () => {
   process.exit(0);
 });
