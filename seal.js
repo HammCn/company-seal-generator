@@ -85,7 +85,7 @@ function createSeal(name, code, outputPath = null) {
   const centerOffset = (codeTotalAngle - actualTotalAngle) / 2;
 
   for (let i = 0; i < codeText.length; i++) {
-    const angle = codeStartAngle + centerOffset + i * codeAngleStep;
+    const angle = codeEndAngle - centerOffset - i * codeAngleStep;
     const x = centerX + codeRadius * Math.cos(angle);
     const y = centerY + codeRadius * Math.sin(angle);
 
