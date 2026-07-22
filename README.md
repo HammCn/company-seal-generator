@@ -30,7 +30,7 @@ const buffer = createSeal('企业名称', '统一社会信用代码', './output/
 
 在 MCP 客户端配置中添加：
 
-**方式一：使用 npx（推荐，无需全局安装）**
+**使用 npx（推荐，无需全局安装）**
 
 ```json
 {
@@ -41,21 +41,10 @@ const buffer = createSeal('企业名称', '统一社会信用代码', './output/
 }
 ```
 
-**方式二：使用本地路径**
-
-```json
-{
-  "company-seal-generator": {
-    "command": "node",
-    "args": ["/path/to/company-seal-generator/index.js"]
-  }
-}
-```
-
 #### 提供的 MCP 工具
 
-| 工具名 | 描述 | 参数 |
-|--------|------|------|
+| 工具名         | 描述             | 参数                                           |
+| -------------- | ---------------- | ---------------------------------------------- |
 | `generateSeal` | 生成电子公章图片 | `name` - 企业名称<br>`code` - 统一社会信用代码 |
 
 #### MCP 调用示例
