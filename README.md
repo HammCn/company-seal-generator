@@ -41,17 +41,19 @@ fs.writeFileSync('./seal.png', buffer);
 
 ```json
 {
-  "company-seal-generator": {
-    "command": "npx",
-    "args": ["company-seal-generator"]
+  "mcpServers":{
+    "company-seal-generator": {
+      "command": "npx",
+      "args": ["company-seal-generator"]
+    }
   }
 }
 ```
 
 #### 提供的 MCP 工具
 
-| 工具名 | 描述 | 参数 |
-|--------|------|------|
+| 工具名         | 描述             | 参数                                                                                                                              |
+| -------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | `generateSeal` | 生成电子公章图片 | `name` - 企业名称<br>`code` - 统一社会信用代码<br>`step` - 做旧程度（可选，默认0）<br>`nameFontSize` - 字体大小（可选，默认40px） |
 
 #### MCP 调用示例
@@ -74,12 +76,12 @@ fs.writeFileSync('./seal.png', buffer);
 
 ### createSeal(name, code, step?, nameFontSize?)
 
-| 参数 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| name | string | 是 | 企业名称，将弧形环绕在公章上半部分 |
-| code | string | 是 | 统一社会信用代码，将弧形环绕在公章下半部分 |
-| step | number | 否 | 做旧程度：0=不做旧（默认），1=轻微做旧，2=中度做旧，3=重度做旧 |
-| nameFontSize | number | 否 | 企业名称字体大小（像素），默认 40px，范围 20-80 |
+| 参数         | 类型   | 必填 | 说明                                                           |
+| ------------ | ------ | ---- | -------------------------------------------------------------- |
+| name         | string | 是   | 企业名称，将弧形环绕在公章上半部分                             |
+| code         | string | 是   | 统一社会信用代码，将弧形环绕在公章下半部分                     |
+| step         | number | 否   | 做旧程度：0=不做旧（默认），1=轻微做旧，2=中度做旧，3=重度做旧 |
+| nameFontSize | number | 否   | 企业名称字体大小（像素），默认 40px，范围 20-80                |
 
 ## 做旧效果说明
 

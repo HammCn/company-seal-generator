@@ -15,6 +15,11 @@ const { createCanvas } = require('canvas');
  * @param {number} step - 做旧程度 (1-3)
  */
 function applyVintageMask(canvas, step) {
+  if (!step) {
+    step = 0;
+  }
+  step = parseInt(step);
+  step = Math.min(3, Math.max(0, step));
   const ctx = canvas.getContext('2d');
   let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   let data = imageData.data;
